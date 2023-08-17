@@ -45,11 +45,11 @@ build_frontend:
     - cd app
     - npm install
   script:
-    - cd angular app/app
+    - cd angular-app/app
     - npm run build --prod 
   artifacts:
     paths:
-     - angular app/app/dist/
+     - angular-app/app/dist/
   
 
 
