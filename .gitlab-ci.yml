@@ -35,6 +35,8 @@ build_backend:      # This job runs in the build stage, which runs first.
 # Stage: Build frontend
 build_frontend:
   stage: build
+  tags:
+    - ubuntu-Demo-runner
   before_script: 
     - npm install
   script:
