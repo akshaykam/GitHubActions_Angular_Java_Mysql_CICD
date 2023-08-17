@@ -29,7 +29,7 @@ build_backend:      # This job runs in the build stage, which runs first.
     - mvn clean install -DskipTests
   artifacts:
     paths:
-      - target/*.jar
+      - springboot-backend/target/*.jar
 
 
 # Stage: Build frontend
@@ -42,7 +42,7 @@ build_frontend:
     - npm run build --prod 
   artifacts:
     paths:
-     - dist/
+     - angular app/app/dist/
   only:
     - main
 
