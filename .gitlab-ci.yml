@@ -39,9 +39,10 @@ build_frontend:
   tags:
     - ubuntu-Demo-runner
   before_script: 
+    - cd angular app/app
     - npm install
   script:
-    - cd angular app
+    - cd angular app/app
     - npm run build --prod 
   artifacts:
     paths:
