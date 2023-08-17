@@ -41,7 +41,7 @@ build_frontend:
   before_script: 
     - npm install
   script:
-    - cd angular app/app
+    - cd angular app
     - npm run build --prod 
   artifacts:
     paths:
