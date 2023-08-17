@@ -40,9 +40,7 @@ build_frontend:
     - ubuntu-Demo-runner
   before_script: 
     - ls -a 
-    - cd angular app
-    - ls -a
-    - cd app
+    - cd angular-app/app
     - npm install
   script:
     - cd angular-app/app
