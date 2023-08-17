@@ -64,7 +64,7 @@ sonarAnalysis_Backend:
       -Dsonar.host.url:$SONAR_HOST_URL 
       -Dsonar.login:$SONAR_TOKEN 
       -Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
-      -Dsonar.organization=gitlab-demo-ci
+      -Dsonar.organization:$SONAR_ORGANIZATION
       -Dsonar.sources=./springboot-backend/src
       -Dsonar.java.binaries=./springboot-backend/target
       #-Dsonar.branch.name=$CI_COMMIT_REF_NAME
@@ -89,7 +89,7 @@ sonarAnalysis_Frontend:
       -Dsonar.login:$SONAR_TOKEN 
       -Dsonar.projectKey=gitlab-demo-ci_3tier-frontend-angular
       -Dsonar.projectName=3tier_Frontend_Angular
-      -Dsonar.organization=gitlab-demo-ci
+      -Dsonar.organization:$SONAR_ORGANIZATION
       -Dsonar.sources=./angular-app/app/src
       
       #-Dsonar.branch.name=$CI_COMMIT_REF_NAME
