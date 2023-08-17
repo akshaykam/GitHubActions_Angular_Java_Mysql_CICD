@@ -55,6 +55,8 @@ build_frontend:
 sonarAnalysis_Backend:
   stage: sonarAnalysis
   image: sonarsource/sonar-scanner-cli:latest
+  tags:
+    - ubuntu-Demo-runner
   variables:
         SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
   script:
@@ -79,6 +81,8 @@ sonarAnalysis_Backend:
 sonarAnalysis_Frontend:
   stage: sonarAnalysis
   image: sonarsource/sonar-scanner-cli:latest
+  tags:
+    - ubuntu-Demo-runner
   variables:
         SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
   script:
@@ -100,6 +104,8 @@ sonarAnalysis_Frontend:
 
 package:
   stage: package
+  tags:
+    - ubuntu-Demo-runner
   script:
     - cd springboot-backend
     - echo "packging application"
