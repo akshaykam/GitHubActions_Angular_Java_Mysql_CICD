@@ -43,8 +43,7 @@ build_frontend:
   artifacts:
     paths:
      - angular app/app/dist/
-  only:
-    - main
+  
 
 
 
