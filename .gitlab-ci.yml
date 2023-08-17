@@ -39,6 +39,7 @@ build_frontend:
   tags:
     - ubuntu-Demo-runner
   before_script: 
+    - ls -a 
     - cd angular app/app
     - npm install
   script:
@@ -53,11 +54,11 @@ build_frontend:
 
 
 
-deploy-job:      # This job runs in the deploy stage.
-  stage: deploy
-  tags:
-    - ubuntu-Demo-runner # It only runs when *both* jobs in the test stage complete successfully.
-  environment: production
-  script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+#deploy-job:      # This job runs in the deploy stage.
+#  stage: deploy
+ # tags:
+  #  - ubuntu-Demo-runner # It only runs when *both* jobs in the test stage complete successfully.
+  #environment: production
+  #script:
+   # - echo "Deploying application..."
+    #- echo "Application successfully deployed."
