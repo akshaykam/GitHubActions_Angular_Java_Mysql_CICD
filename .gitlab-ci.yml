@@ -18,35 +18,35 @@ cache:
 
 
 # Stage: Build backend
-build_backend:      # This job runs in the build stage, which runs first.
-  stage: build
-  image: maven:3.8.4
-  tags:
-    - ubuntu-Demo-runner
-  script:
-    - cd springboot-backend
-    - echo "Building the Spring Boot application"
-    - mvn clean install -DskipTests
-  artifacts:
-    paths:
-      - springboot-backend/target/*.jar
+#build_backend:      # This job runs in the build stage, which runs first.
+ # stage: build
+  #image: maven:3.8.4
+  #tags:
+   # - ubuntu-Demo-runner
+  #script:
+   # - cd springboot-backend
+    #- echo "Building the Spring Boot application"
+    #- mvn clean install -DskipTests
+  #artifacts:
+   # paths:
+    #  - springboot-backend/target/*.jar
 
 
 # Stage: Build frontend
-build_frontend:
-  stage: build
-  image: node:14-alpine
-  tags:
-    - ubuntu-Demo-runner
-  before_script: 
-    - ls -a 
-    - cd angular-app/app
-    - npm install
-  script:
-    - npm run build --prod 
-  artifacts:
-    paths:
-     - angular-app/app/dist/
+#build_frontend:
+ # stage: build
+  #image: node:14-alpine
+  #tags:
+   # - ubuntu-Demo-runner
+  #before_script: 
+   # - ls -a 
+    #- cd angular-app/app
+    #- npm install
+  #script:
+   # - npm run build --prod 
+  #artifacts:
+   # paths:
+    # - angular-app/app/dist/
 
 
 
@@ -63,7 +63,7 @@ sonarAnalysis_Backend:
     #- basename $(pwd) #command added
     #- cd $CI_PROJECT_DIR
     - sonar-scanner -X
-      -Dsonar.host.url=sonarcloud.io
+      -Dsonar.host.url=https://sonarcloud.io/
       -Dsonar.login:$SONAR_TOKEN 
       -Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
       -Dsonar.projectName=Gitlab_Demo_CI_Sprinboot
