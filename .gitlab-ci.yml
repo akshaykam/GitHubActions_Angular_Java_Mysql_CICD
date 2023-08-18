@@ -66,13 +66,14 @@ sonarAnalysis_Backend:
       -Dsonar.host.url:$SONAR_HOST_URL 
       -Dsonar.login:$SONAR_TOKEN 
       -Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
+      -Dsonar.projectName=Gitlab_Demo_CI_Sprinboot
       -Dsonar.organization:$SONAR_ORGANIZATION
       -Dsonar.sources=./springboot-backend/src
       -Dsonar.java.binaries=./springboot-backend/target
       #-Dsonar.branch.name=$CI_COMMIT_REF_NAME
   only:
     refs:
-      - main
+      - master
 
 
 
