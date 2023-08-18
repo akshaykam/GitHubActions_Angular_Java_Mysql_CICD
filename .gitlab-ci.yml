@@ -67,7 +67,7 @@ sonarAnalysis_Backend:
       -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
       -Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
       -Dsonar.projectName=Gitlab_Demo_CI_Sprinboot
-      -Dsonar.organization:$SONAR_ORGANIZATION
+      -Dsonar.organization=gitlab-demo-ci
       -Dsonar.sources=./springboot-backend/src
       -Dsonar.java.binaries=./springboot-backend/target
       #-Dsonar.branch.name=$CI_COMMIT_REF_NAME
