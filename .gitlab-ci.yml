@@ -63,7 +63,7 @@ sonarAnalysis_Backend:
     #- basename $(pwd) #command added
     #- cd $CI_PROJECT_DIR
     - sonar-scanner -X
-      -Dsonar.host.url:$SONAR_HOST_URL 
+      -Dsonar.host.url=sonarcloud.io
       -Dsonar.login:$SONAR_TOKEN 
       -Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
       -Dsonar.projectName=Gitlab_Demo_CI_Sprinboot
