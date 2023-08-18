@@ -62,7 +62,7 @@ sonarAnalysis_Backend:
   script:
     #- basename $(pwd) #command added
     #- cd $CI_PROJECT_DIR
-    - sonar-scanner -X
+    - sonar-scanner 
       -Dsonar.host.url=https://sonarcloud.io/
       -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
       -Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
@@ -89,7 +89,7 @@ sonarAnalysis_Backend:
   #script:
     #- basename $(pwd) #command added
     #- cd $CI_PROJECT_DIR
-   # - sonar-scanner -X
+   # - sonar-scanner 
     #  -Dsonar.host.url:$SONAR_HOST_URL 
      # -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
       #-Dsonar.projectKey=gitlab-demo-ci_3tier-frontend-angular
