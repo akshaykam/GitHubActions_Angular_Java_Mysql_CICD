@@ -32,21 +32,21 @@ build_backend:      # This job runs in the build stage, which runs first.
       - springboot-backend/target/*.jar
 
 
-# Stage: Build frontend
-#build_frontend:
- # stage: build
-  #image: node:14-alpine
-  #tags:
-   # - ubuntu-Demo-runner
-  #before_script: 
-   # - ls -a 
-    #- cd angular-app/app
-    #- npm install
-  #script:
-   # - npm run build --prod 
-  #artifacts:
-   # paths:
-    # - angular-app/app/dist/
+#Stage: Build frontend
+build_frontend:
+  stage: build
+  image: node:14-alpine
+  tags:
+    - ubuntu-Demo-runner
+  before_script: 
+    - ls -a 
+    - cd angular-app/app
+    - npm install
+  script:
+    - npm run build --prod 
+  artifacts:
+    paths:
+     - angular-app/app/dist/
 
 
 
@@ -79,32 +79,33 @@ sonarAnalysis_Backend:
 
 
 
-#sonarAnalysis_Frontend:
- # stage: sonarAnalysis
-  #image: sonarsource/sonar-scanner-cli:latest
-  #tags:
-  #  - ubuntu-Demo-runner
-  #variables:
-   #     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
-  #script:
-    #- basename $(pwd) #command added
-    #- cd $CI_PROJECT_DIR
-   # - sonar-scanner 
-    #  -Dsonar.host.url:$SONAR_HOST_URL 
-     # -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
-      #-Dsonar.projectKey=gitlab-demo-ci_3tier-frontend-angular
-      #-Dsonar.projectName=3tier_Frontend_Angular
-      #-Dsonar.organization:$SONAR_ORGANIZATION
-      #-Dsonar.sources=./angular-app/app/src
+sonarAnalysis_Frontend:
+  stage: sonarAnalysis
+  image: sonarsource/sonar-scanner-cli:latest
+  tags:
+    - ubuntu-Demo-runner
+  variables:
+        SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
+  script:
+    - basename $(pwd) #command added
+    - cd $CI_PROJECT_DIR
+    - sonar-scanner 
+      -Dsonar.host.url=https://sonarcloud.io/ 
+      -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
+      -Dsonar.projectKey=gitlab-demo-ci_3tier-frontend-angular
+      -Dsonar.projectName=3tier_Frontend_Angular
+      -Dsonar.organization=gitlab-demo-ci
+      -Dsonar.sources=./angular-app/app/src
       
       #-Dsonar.branch.name=$CI_COMMIT_REF_NAME
-  #only:
-   # refs:
-    #  - master
+  only:
+    refs:
+      - master
   
 
 package:
   stage: package
+  image: maven:3.9.3-alpine
   tags:
     - ubuntu-Demo-runner
   script:
