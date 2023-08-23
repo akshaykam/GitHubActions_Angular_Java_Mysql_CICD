@@ -2,7 +2,7 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
   - sonarAnalysis
-  - package
+  #- package
   - deploy
 
 
@@ -103,26 +103,33 @@ sonarAnalysis_Frontend:
       - master
   
 
-package:
-  stage: package
-  image: maven:3.8.4
+#package:
+ # stage: package
+  #image: maven:3.8.4
+  #tags:
+  #  - ubuntu-Demo-runner
+  #script:
+   # - cd springboot-backend
+    #- echo "packging application"
+    #- mvn package -DskipTests
+  #artifacts:
+   # paths:
+    #  - springboot-backend/target/*.jar
+
+
+
+deploy-job-backend:      # This job runs in the deploy stage.
+  stage: deploy
+  image: docker:latest
   tags:
-    - ubuntu-Demo-runner
+    - ubuntu-Demo-runner # It only runs when *both* jobs in the test stage complete successfully.
+  services:
+    - docker:dind
   script:
     - cd springboot-backend
-    - echo "packging application"
-    - mvn package -DskipTests
-  artifacts:
-    paths:
-      - springboot-backend/target/*.jar
+    - echo "deploying backend  application in jfrog"
+    - docker build -t  172.27.59.80:8082/deepika-gitlab-pipeline/docker-3tier-springApp .
+    - docker login -u admin -p Cybage@123 http://172.27.59.80:8082/
+    - docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-3tier-springApp 
 
-
-
-#deploy-job:      # This job runs in the deploy stage.
-#  stage: deploy
- # tags:
-  #  - ubuntu-Demo-runner # It only runs when *both* jobs in the test stage complete successfully.
-  #environment: production
-  #script:
-   # - echo "Deploying application..."
-    #- echo "Application successfully deployed."
+  
