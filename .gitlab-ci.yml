@@ -105,7 +105,7 @@ sonarAnalysis_Frontend:
 
 package:
   stage: package
-  image: maven:3.9.3-alpine
+  image: maven:3.8.4
   tags:
     - ubuntu-Demo-runner
   script:
