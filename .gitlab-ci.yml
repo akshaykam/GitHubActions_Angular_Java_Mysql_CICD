@@ -52,55 +52,55 @@ build_frontend:
 
 
 
-sonarAnalysis_Backend:
-  stage: sonarAnalysis
-  image: sonarsource/sonar-scanner-cli:latest
-  tags:
-    - ubuntu-Demo-runner
-  variables:
-        SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
-  script:
+#sonarAnalysis_Backend:
+ # stage: sonarAnalysis
+  #image: sonarsource/sonar-scanner-cli:latest
+  #tags:
+   # - ubuntu-Demo-runner
+  #variables:
+   #     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
+  #script:
     #- basename $(pwd) #command added
     #- cd $CI_PROJECT_DIR
-    - sonar-scanner 
-      -Dsonar.host.url=https://sonarcloud.io/
-      -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
-      -Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
-      -Dsonar.projectName=Gitlab_Demo_CI_Sprinboot
-      -Dsonar.organization=gitlab-demo-ci
-      -Dsonar.sources=./springboot-backend/src
-      -Dsonar.java.binaries=./springboot-backend/target
+   # - sonar-scanner 
+    #  -Dsonar.host.url=https://sonarcloud.io/
+     # -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
+      #-Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
+      #-Dsonar.projectName=Gitlab_Demo_CI_Sprinboot
+      #-Dsonar.organization=gitlab-demo-ci
+      #-Dsonar.sources=./springboot-backend/src
+      #-Dsonar.java.binaries=./springboot-backend/target
       #-Dsonar.branch.name=$CI_COMMIT_REF_NAME
-  only:
-    refs:
-      - master
+  #only:
+   # refs:
+    #  - master
 
 
 
 
 
-sonarAnalysis_Frontend:
-  stage: sonarAnalysis
-  image: sonarsource/sonar-scanner-cli:latest
-  tags:
-    - ubuntu-Demo-runner
-  variables:
-        SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
-  script:
-    - basename $(pwd) #command added
-    - cd $CI_PROJECT_DIR
-    - sonar-scanner 
-      -Dsonar.host.url=https://sonarcloud.io/ 
-      -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
-      -Dsonar.projectKey=gitlab-demo-ci_3tier-frontend-angular
-      -Dsonar.projectName=3tier_Frontend_Angular
-      -Dsonar.organization=gitlab-demo-ci
-      -Dsonar.sources=./angular-app/app/src
+#sonarAnalysis_Frontend:
+ # stage: sonarAnalysis
+  #image: sonarsource/sonar-scanner-cli:latest
+  #tags:
+  #  - ubuntu-Demo-runner
+  #variables:
+  #      SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
+  #script:
+   # - basename $(pwd) #command added
+    #- cd $CI_PROJECT_DIR
+    #- sonar-scanner 
+    #  -Dsonar.host.url=https://sonarcloud.io/ 
+     # -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
+      #-Dsonar.projectKey=gitlab-demo-ci_3tier-frontend-angular
+      #-Dsonar.projectName=3tier_Frontend_Angular
+      #-Dsonar.organization=gitlab-demo-ci
+      #-Dsonar.sources=./angular-app/app/src
       
       #-Dsonar.branch.name=$CI_COMMIT_REF_NAME
-  only:
-    refs:
-      - master
+  #only:
+   # refs:
+    #  - master
   
 
 #package:
@@ -128,8 +128,10 @@ deploy-job-backend:      # This job runs in the deploy stage.
   script:
     - cd springboot-backend
     - echo "deploying backend  application in jfrog"
-    - docker build -t  172.27.59.80:8082/deepika-gitlab-pipeline/docker-3tier-springApp .
-    - docker login -u admin -p Cybage@123 http://172.27.59.80:8082/
-    - docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-3tier-springApp 
+    - docker build -t docker-3tier-springApp .
+    #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    #- docker build -t  172.27.59.80:8082/deepika-gitlab-pipeline/docker-3tier-springApp .
+    #- docker login -u admin -p Cybage@123 http://172.27.59.80:8082/
+    #- docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-3tier-springApp 
 
   
