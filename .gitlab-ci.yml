@@ -132,8 +132,8 @@ deploy-job-backend:      # This job runs in the deploy stage.
     - echo "deploying backend  application in jfrog"
    # - sudo docker build -t docker-3tier-springApp .
     #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    -  docker build -t  172.27.59.80:8082/deepika-gitlab-pipeline/docker-3tier-pipeline-springapp .
+    -  docker build -t  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline-springapp .
     - docker login -u admin -p Cybage@123 http://172.27.59.80:8082/
-    - docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-3tier-pipeline-springapp 
+    - docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline-springapp 
 
   
