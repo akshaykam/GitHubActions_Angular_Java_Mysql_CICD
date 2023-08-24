@@ -7,6 +7,6 @@ COPY . .
 #RUN npm run build
 # stage 2
 
-COPY /app/dist/app /usr/share/nginx/html
+COPY angular-app/app/dist/app /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
 #COPY default.conf /etc/nginx/conf.d/
