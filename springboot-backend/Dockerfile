@@ -1,16 +1,16 @@
 	#stage1
-        FROM  maven:3.6-alpine as builder
+     #   FROM  maven:3.6-alpine as builder
 
-        COPY springboot-backend /springboot-backend
+      #  COPY springboot-backend /springboot-backend
 
-        WORKDIR /springboot-backend
+       # WORKDIR /springboot-backend
 
-        RUN mvn clean install -DskipTests=true
+        #RUN mvn clean install -DskipTests=true
      #stage2
         FROM openjdk:8-alpine
 
-        COPY --from=builder /springboot-backend/target/app.jar /app.jar
+        COPY  springboot-backend/target/springboot-backend-0.0.1-SNAPSHOT.jar springboot-backend-0.0.1-SNAPSHOT.jar
 
         EXPOSE 8080
 
-        ENTRYPOINT ["java","-jar","app.jar"] 
+        ENTRYPOINT ["java","-jar","/springboot-backend-0.0.1-SNAPSHOT.jar"] 
