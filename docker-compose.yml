@@ -6,8 +6,14 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=employeedb
+    ports:
+      - 3310:3306
+    networks:
+      - deepikabNetwork    
+
+
   springboot-docker-container:
-    image: springapp
+    image: 172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline-springapp
     container_name: springboot-docker-container
     ports:
       - 8080:8080
@@ -16,16 +22,25 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-standalone:3306/employeedb?useSSL=false&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASS=root
-    build:
-      context: ./springboot-backend/
-      dockerfile: Dockerfile
+   # build:
+     # context: ./springboot-backend/
+     # dockerfile: Dockerfile
     depends_on:
       - mysql-standalone
+    networks:
+      - deepikabNetwork 
+
+
+
   angular-docker-container:
-    image: angularapp
+    image: 172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline1-angularapp
     container_name: angular-docker-container
     ports:
       - 4200:80
-    build:
-      context: ./angular app/app/
-      dockerfile: Dockerfile
+    #build:
+     # context: ./angular-app/app/
+     # dockerfile: Dockerfile
+    depends_on:
+      - springboot-docker-container
+    networks:
+      - deepikabNetwork 
