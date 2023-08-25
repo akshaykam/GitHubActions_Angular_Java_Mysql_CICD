@@ -9,7 +9,7 @@ services:
     ports:
       - 3310:3306
     volumes:
-      - deepikabVolume: /var/lib/mysql
+      - deepikabVolume:/var/lib/mysql
           
     networks:
       - deepikabNetwork 
@@ -62,4 +62,4 @@ networks:
 
 
 volumes:
-   deepikabVolume: 
+  deepikabVolume: 
