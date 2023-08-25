@@ -39,7 +39,7 @@ build_frontend:
   image: node:14-alpine
   tags:
     - ubuntu-Demo-runner
-  before_script: 
+  script: 
     - ls -a 
     - cd angular-app/app
     - npm install
