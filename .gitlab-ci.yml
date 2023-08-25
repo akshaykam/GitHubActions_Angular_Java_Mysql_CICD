@@ -2,7 +2,6 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
   - sonarAnalysis
-  #- package
   - deploy
   - docker
 
@@ -37,88 +36,75 @@ build_backend:      # This job runs in the build stage, which runs first.
 
 
 #Stage: Build frontend
-#build_frontend:
- # stage: build
-  #image: node:14-alpine
-  #tags:
-   # - ubuntu-Demo-runner
-  #script: 
-   # - ls -a 
-    #- cd angular-app/app
-   # - npm install
-  #cache:
-   # key:
-     # files:
-      #  - angular-app/app/package.json
-    #paths:
-     # - node_modules
-    #policy: pull
+build_frontend:
+  stage: build
+  image: node:14-alpine
+  tags:
+    - ubuntu-Demo-runner
+  script: 
+    - ls -a 
+    - cd angular-app/app
+    - npm install
+  cache:
+    key:
+      files:
+        - angular-app/app/package.json
+    paths:
+      - node_modules
+    policy: pull
 
 
 
 
-#sonarAnalysis_Backend:
- # stage: sonarAnalysis
-  #image: sonarsource/sonar-scanner-cli:latest
- # tags:
-  #  - ubuntu-Demo-runner
-  #variables:
-   #     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
-  #script:
+sonarAnalysis_Backend:
+  stage: sonarAnalysis
+  image: sonarsource/sonar-scanner-cli:latest
+  tags:
+    - ubuntu-Demo-runner
+  variables:
+        SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
+  script:
     #- basename $(pwd) #command added
-    #- cd $CI_PROJECT_DIR
-   # - sonar-scanner 
-    #  -Dsonar.host.url=https://sonarcloud.io/
-     #-Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
-     # -Dsonar.projectName=Gitlab_Demo_CI_Sprinboot
-    #  -Dsonar.organization=gitlab-demo-ci
-     # -Dsonar.sources=./springboot-backend/src
-    #  -Dsonar.java.binaries=./springboot-backend/target
-      #-Dsonar.branch.name=$CI_COMMIT_REF_NAME
-  #only:
-   # refs:
-   #   - master
+    - cd $CI_PROJECT_DIR
+    - sonar-scanner 
+      -Dsonar.host.url=https://sonarcloud.io/
+      -Dsonar.projectKey=gitlab-demo-ci_gitlab-demo-ci-sprinboot
+      -Dsonar.projectName=Gitlab_Demo_CI_Sprinboot
+      -Dsonar.organization=gitlab-demo-ci
+      -Dsonar.sources=./springboot-backend/src
+      -Dsonar.java.binaries=./springboot-backend/target
+      -Dsonar.branch.name=$CI_COMMIT_REF_NAME
+  only:
+    refs:
+      - master
 
 
 
 
 
-#sonarAnalysis_Frontend:
- # stage: sonarAnalysis
- # image: sonarsource/sonar-scanner-cli:latest
- # tags:
-  #  - ubuntu-Demo-runner
- # variables:
-  #      SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
- # script:
+sonarAnalysis_Frontend:
+  stage: sonarAnalysis
+  image: sonarsource/sonar-scanner-cli:latest
+  tags:
+    - ubuntu-Demo-runner
+  variables:
+        SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache SonarCloud data
+  script:
    # - basename $(pwd) #command added
-   # - cd $CI_PROJECT_DIR
-  #  - sonar-scanner 
-   #   -Dsonar.host.url=https://sonarcloud.io/ 
-    #  -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
-   #   -Dsonar.projectKey=gitlab-demo-ci_3tier-frontend-angular
-   #   -Dsonar.projectName=3tier_Frontend_Angular
-   #   -Dsonar.organization=gitlab-demo-ci
-   #   -Dsonar.sources=./angular-app/app/src
+    - cd $CI_PROJECT_DIR
+    - sonar-scanner 
+      -Dsonar.host.url=https://sonarcloud.io/ 
+      -Dsonar.login=ed1948d539664ac38b1d6b21b5eb122600d03516
+      -Dsonar.projectKey=gitlab-demo-ci_3tier-frontend-angular
+      -Dsonar.projectName=3tier_Frontend_Angular
+      -Dsonar.organization=gitlab-demo-ci
+      -Dsonar.sources=./angular-app/app/src
       
      # -Dsonar.branch.name=$CI_COMMIT_REF_NAME
- # only:
-   # refs:
-   #   - master
+  only:
+    refs:
+      - master
   
-
-#package:
- # stage: package
-  #image: maven:3.8.4
-  #tags:
-  #  - ubuntu-Demo-runner
-  #script:
-   # - cd springboot-backend
-    #- echo "packging application"
-    #- mvn package -DskipTests
-  #artifacts:
-   # paths:
-    #  - springboot-backend/target/*.jar
 
 
 
@@ -145,23 +131,19 @@ deploy-job-backend:      # This job runs in the deploy stage.
 
 
 
-#deploy-job-frontend:      # This job runs in the deploy stage.
- # stage: deploy
- # image: docker:latest
- # tags:
- #   - ubuntu-Demo-runner # It only runs when *both* jobs in the test stage complete successfully.
- # services:
- #   - docker:18.09.7-dind
-  #before_script:
-   # - apk add --no-cache --upgrade bash
- # script:
-  #  - cd angular-app/app
-   # - echo "deploying frontend application in jfrog"
-    #- sudo docker build -t docker-3tier-springApp .
-    #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    #- docker build -t  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline1-angularapp .
-  #  - docker login -u admin -p Cybage@123 http://172.27.59.80:8082/
-  #  - docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline1-angularapp
+deploy-job-frontend:      # This job runs in the deploy stage.
+  stage: deploy
+  image: docker:latest
+  tags:
+    - ubuntu-Demo-runner # It only runs when *both* jobs in the test stage complete successfully.
+  services:
+    - docker:18.09.7-dind
+  script:
+    - cd angular-app/app
+    - echo "deploying frontend application in jfrog"
+    - docker build -t  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline1-angularapp .
+    - docker login -u admin -p Cybage@123 http://172.27.59.80:8082/
+    - docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline1-angularapp
 
 
 #To run docker-compose file
