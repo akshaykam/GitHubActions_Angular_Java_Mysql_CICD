@@ -1,4 +1,4 @@
-version: '3'
+version: '2.4'
 services:
   mysql-standalone:
     image: mysql:latest
@@ -8,8 +8,17 @@ services:
       - MYSQL_DATABASE=employeedb
     ports:
       - 3310:3306
+    volumes:
+      - deepikabVolume: /var/lib/mysql
+          
     networks:
-      - deepikabNetwork    
+      - deepikabNetwork 
+    healthcheck:      
+      test: ["CMD", "mysqladmin", "ping", "-h", "mysql-standalone"]  # Or use the hostname of your MySQL container      
+      interval: 10s      
+      timeout: 10s      
+      retries: 3  
+
 
 
   springboot-docker-container:
@@ -17,7 +26,7 @@ services:
     container_name: springboot-docker-container
     ports:
       - 8083:8080
-    command: ["sh", "-c", "while ! nc -z mysql-standalone 3306; do sleep 1; done && java -jar app.jar"]
+    #command: ["sh", "-c", "while ! nc -z mysql-standalone 3306; do sleep 1; done && java -jar app.jar"]
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-standalone:3306/employeedb?useSSL=false&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
@@ -26,9 +35,11 @@ services:
      # context: ./springboot-backend/
      # dockerfile: Dockerfile
     depends_on:
-      - mysql-standalone
+      mysql-standalone:
+        condition: service_healthy
     networks:
       - deepikabNetwork 
+
 
 
 
@@ -48,3 +59,7 @@ services:
 
 networks:
   deepikabNetwork:    
+
+
+volumes:
+   deepikabVolume: 
