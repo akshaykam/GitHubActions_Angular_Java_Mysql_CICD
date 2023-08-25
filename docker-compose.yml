@@ -30,9 +30,9 @@ services:
       - 8083:8080
     #command: ["sh", "-c", "while ! nc -z mysql-standalone 3306; do sleep 1; done && java -jar app.jar"]
     environment:
-       SPRING_DATASOURCE_URL=jdbc:mysql://mysql-standalone:3306/employeedb?useSSL=false&allowPublicKeyRetrieval=true
-       SPRING_DATASOURCE_USERNAME=deepika
-       SPRING_DATASOURCE_PASSWORD=deepika
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-standalone:3306/employeedb?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=deepika
+      - SPRING_DATASOURCE_PASSWORD=deepika
    # build:
      # context: ./springboot-backend/
      # dockerfile: Dockerfile
