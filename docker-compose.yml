@@ -46,5 +46,5 @@ services:
       - deepikabNetwork 
 
 
-  networks:
-    deepikabNetwork:    
+networks:
+  deepikabNetwork:    
