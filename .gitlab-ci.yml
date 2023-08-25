@@ -41,6 +41,8 @@ build_frontend:
   image: node:14-alpine
   tags:
     - ubuntu-Demo-runner
+  rules:
+   - when: manual
   script: 
     - ls -a 
     - cd angular-app/app
