@@ -4,10 +4,10 @@ services:
     image: mysql:latest
     container_name: mysql-standalone
     environment:
-      MYSQL_USER=deepika
-      MYSQL_PASSWORD=deepika
-      MYSQL_ROOT_PASSWORD=root
-      MYSQL_DATABASE=employeedb
+      MYSQL_USER:deepika
+      MYSQL_PASSWORD:deepika
+      MYSQL_ROOT_PASSWORD:root
+      MYSQL_DATABASE:employeedb
     ports:
       - 3310:3306
     volumes:
