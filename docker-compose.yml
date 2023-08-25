@@ -44,3 +44,7 @@ services:
       - springboot-docker-container
     networks:
       - deepikabNetwork 
+
+
+  networks:
+    - deepikabNetwork:    
