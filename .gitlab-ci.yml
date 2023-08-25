@@ -48,6 +48,12 @@ build_frontend:
   artifacts:
     paths:
      - angular-app/app/dist/
+  cache:
+    key:
+      files:
+        - angular-app/app/package.json
+    paths:
+      - node_modules
 
 
 
