@@ -1,12 +1,9 @@
-# stage 1
-#FROM node:12.7-alpine AS build
-
-FROM nginx:alpine3.17-slim
+# stage 1 
+FROM node:12.7-alpine AS build
 WORKDIR /app
 COPY . .
-#RUN npm run build
-# stage 2
-
-#COPY angular-app/app/dist/app /usr/share/nginx/html
-CMD ["nginx", "-g", "daemon off;"]
+RUN npm run build
+# stage 2 
+FROM nginx:alpine3.17-slim
+COPY --from=build /app/dist/app /usr/share/nginx/html
 #COPY default.conf /etc/nginx/conf.d/
