@@ -174,5 +174,6 @@ dockerizaration:
   services:
     - docker:18.09.7-dind
   script:
+    - docker rm -f mysql-standalone springboot-docker-container angular-docker-container
     - docker-compose up -d     
   
