@@ -4,6 +4,8 @@ services:
     image: mysql:latest
     container_name: mysql-standalone
     environment:
+      - MYSQL_USER=deepika
+      - MYSQL_PASSWORD=deepika
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=employeedb
     ports:
@@ -29,8 +31,8 @@ services:
     #command: ["sh", "-c", "while ! nc -z mysql-standalone 3306; do sleep 1; done && java -jar app.jar"]
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-standalone:3306/employeedb?useSSL=false&allowPublicKeyRetrieval=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASS=root
+      - SPRING_DATASOURCE_USERNAME=deepika
+      - SPRING_DATASOURCE_PASSWORD=deepika
    # build:
      # context: ./springboot-backend/
      # dockerfile: Dockerfile
