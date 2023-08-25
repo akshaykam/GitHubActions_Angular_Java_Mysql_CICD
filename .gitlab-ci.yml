@@ -43,11 +43,6 @@ build_frontend:
     - ls -a 
     - cd angular-app/app
     - npm install
-  script:
-    - npm run build --prod 
-  artifacts:
-    paths:
-     - angular-app/app/dist/
   cache:
     key:
       files:
