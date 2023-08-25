@@ -162,6 +162,8 @@ deploy-job-frontend:      # This job runs in the deploy stage.
 #To run docker-compose file
 dockerizaration:
   stage: docker
+  tags:
+    - ubuntu-Demo-runner
   script:
     - docker-compose up -d     
   
