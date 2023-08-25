@@ -54,7 +54,7 @@ build_frontend:
         - angular-app/app/package.json
     paths:
       - node_modules
-
+    policy: pull
 
 
 
