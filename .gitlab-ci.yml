@@ -4,6 +4,7 @@ stages:          # List of stages for jobs, and their order of execution
   - sonarAnalysis
   #- package
   - deploy
+  - docker
 
 
 variables:
@@ -155,5 +156,12 @@ deploy-job-frontend:      # This job runs in the deploy stage.
     #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline1-angularapp .
     - docker login -u admin -p Cybage@123 http://172.27.59.80:8082/
-    - docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline1-angularapp 
+    - docker push  172.27.59.80:8082/deepika-gitlab-pipeline/docker-pipeline1-angularapp
+
+
+#To run docker-compose file
+dockerizaration:
+  stage: docker
+  script:
+    - docker-compose up -d     
   
