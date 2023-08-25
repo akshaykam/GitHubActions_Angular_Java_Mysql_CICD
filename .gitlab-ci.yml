@@ -168,8 +168,11 @@ deploy-job-frontend:      # This job runs in the deploy stage.
 #To run docker-compose file
 dockerizaration:
   stage: docker
+  image: docker:latest
   tags:
     - ubuntu-Demo-runner
+  services:
+    - docker:18.09.7-dind
   script:
     - docker-compose up -d     
   
