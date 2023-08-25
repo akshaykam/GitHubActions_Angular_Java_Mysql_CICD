@@ -34,22 +34,22 @@ build_backend:      # This job runs in the build stage, which runs first.
 
 
 #Stage: Build frontend
-build_frontend:
-  stage: build
-  image: node:14-alpine
-  tags:
-    - ubuntu-Demo-runner
-  script: 
-    - ls -a 
-    - cd angular-app/app
-    - npm install
-  cache:
-    key:
-      files:
-        - angular-app/app/package.json
-    paths:
-      - node_modules
-    policy: pull
+#build_frontend:
+ # stage: build
+ # image: node:14-alpine
+  #tags:
+  #  - ubuntu-Demo-runner
+ # script: 
+  #  - ls -a 
+   # - cd angular-app/app
+   # - npm install
+  #cache:
+  #  key:
+   #   files:
+    #    - angular-app/app/package.json
+   # paths:
+    #  - node_modules
+    #policy: pull
 
 
 
