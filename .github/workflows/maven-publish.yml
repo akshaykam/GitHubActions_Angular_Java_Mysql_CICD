@@ -112,10 +112,10 @@ jobs:
  # snyk - identifying and mitigating security vulnerabilities in applications and containerized environments
   snyk-scan: 
    runs-on: 'self-hosted'
-   needs: ['build-java','build-angular']
+   #needs: ['build-java','build-angular']
    container:
       image: node:14  # Use an image that matches your GLIBC version
-      options: --user akshay  # This allows you to install packages as the root user
+      #options: --user root  # This allows you to install packages as the root user
 
    steps:
       - name: Checkout Code
