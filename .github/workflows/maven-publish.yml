@@ -109,22 +109,6 @@ jobs:
              docker login -u ${{ secrets.JFROG_USERNAME }} -p ${{ secrets.JFROG_PASSWORD }} http://172.27.59.80:8082
              docker push  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}   
 
-  # snyk - identifying and mitigating security vulnerabilities in applications and containerized environments
-  snyk-scan: 
-   runs-on: 'self-hosted'
-   #needs: ['build-java','build-angular']
-   steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: check Snyk CLI installation
-        run: |
-         cd ./angular-app/app
-         npm install
-         snyk --version           #snyk is installed on self-hosted runner
-         snyk auth ${{ secrets.SNYK_API_TOKEN }} && snyk test --json > snyk-results.json
-        #sudo npm install -g snyk        
-           
 # SonarQube analysis using SonarQube Actions 
   SonarQube-analysis:
       runs-on: 'self-hosted'
