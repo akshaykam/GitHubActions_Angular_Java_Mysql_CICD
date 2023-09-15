@@ -74,7 +74,7 @@ jobs:
 
       - name: Build Angular app
         run: |
-          cd ./"angular app"/app 
+          cd ./'angular app'/app 
           npm install 
           ng build --prod
       - name: cache for Angularapp
