@@ -1,0 +1,61 @@
+name: PR Decoration, Dockerize Java App and Deploy on EC2 with ASG
+
+# events on which pipeline will run
+on: 
+  #push:
+    #branches: [ master ]
+  #pull_request:
+    #branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      parameter_name:
+        description: 'manually running jobs'
+        required: true
+env:
+     MY_SQL_ROOT: ${{ secrets.MY_SQL_ROOT_PASSWORD }}
+     MYSQL_USER: ${{ secrets.MYSQL_USER }}
+     MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+     MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+     RUN_NUMBER: ${{ github.run_number }}        
+jobs:
+
+# Building SpringBoot application, caching dependencies and build outputs to improve workflow execution time.
+# maximum allowed caching per repository : 10GB
+
+  build-java:
+    runs-on: 'self-hosted'
+
+    steps:
+    - name: repository checkout
+      uses: actions/checkout@v3
+
+    - name: java setup
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu' # See 'Supported distributions' for available options
+        java-version: '8'
+
+    - name: Set up Maven
+      uses: stCarolas/setup-maven@v4.5
+      with:
+        maven-version: '3.8.2'
+
+    - name: build with maven
+      run: cd ./springboot-backend ; mvn clean install -DskipTests=true
+    
+    - name: cache for springapp
+      uses: actions/cache@v3
+      id: cache
+      with:
+       path: ~/.m2
+       key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+       restore-keys:  ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+       lookup-only: true
+       
+    - name: Debug Cache
+      run: |
+       echo "Cache Key: ${{ runner.os }}-${{ env.cache_key }}"
+       echo "Cache Directory Contents:"
+       ls -al ~/.m2
+      env:
+       cache_key: Linux-
