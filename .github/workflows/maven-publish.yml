@@ -59,3 +59,37 @@ jobs:
        ls -al ~/.m2
       env:
        cache_key: Linux-
+       
+  # Building Angular application, caching dependencies and build outputs to improve workflow execution time.
+  build-angular:
+    runs-on: 'self-hosted'
+    steps:
+      - name: set up Node.js
+        uses: actions/setup-node@v3
+        with:
+            node-version: 16 #you can adjust node version 14,16,18
+        
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli 
+
+      - name: Build Angular app
+        run: |
+          cd ./"angular app"/app 
+          npm install 
+          ng build --prod
+      - name: cache for Angularapp
+        uses: actions/cache@v3
+        id: angular-cache
+        with:
+         path: ~/.npm
+         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+         restore-keys: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+         lookup-only: true
+         
+      - name: Debug Cache
+        run: |
+         echo "Cache Key: ${{ runner.os }}-${{ env.cache_key }}"
+         echo "Cache Directory Contents:"
+         ls -al ~/.m2
+        env:
+          cache_key: Linux-  
