@@ -19,8 +19,8 @@ env:
      RUN_NUMBER: ${{ github.run_number }}        
 jobs:
 
-# Building SpringBoot application, caching dependencies and build outputs to improve workflow execution time.
-# maximum allowed caching per repository : 10GB
+# Building SpringBoot application, caching dependencies to improve workflow execution time.
+# Maximum allowed caching per repository: 10GB
 
   build-java:
     runs-on: 'self-hosted'
@@ -59,8 +59,15 @@ jobs:
        ls -al ~/.m2
       env:
        cache_key: Linux-
+    
+    - name: docker stage + spring app
+      run: |
+              cd ./springboot-backend
+              docker build -t  172.27.59.80:8082/akshay-github-actions/gha-springapp:${{ github.run_number }}  .
+              docker login -u ${{ secrets.JFROG_USERNAME }} -p ${{ secrets.JFROG_PASSWORD }} http://172.27.59.80:8082
+              docker push  172.27.59.80:8082/akshay-github-actions/gha-springapp:${{ github.run_number }}  
        
-  # Building Angular application, caching dependencies and build outputs to improve workflow execution time.
+  # Building Angular application, caching dependencies  to improve workflow execution time.
   build-angular:
     runs-on: 'self-hosted'
     steps:
@@ -94,6 +101,13 @@ jobs:
          ls -al ~/.m2
         env:
           cache_key: Linux-
+          
+      - name: docker stage + angular-app
+        run: |
+             cd ./angular-app/app 
+             docker build -t  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}  .
+             docker login -u ${{ secrets.JFROG_USERNAME }} -p ${{ secrets.JFROG_PASSWORD }} http://172.27.59.80:8082
+             docker push  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}    
 
 # SonarQube analysis using SonarQube Actions 
   SonarQube-analysis:
