@@ -90,9 +90,9 @@ jobs:
         - name: Slack Notification
           uses: act10ns/slack@v1
           with:
-            status: ${{job.status}}
             steps:  ${{toJson(steps)}}
             channel: '#github_actions_notification'
+            slack-message: "Angular App application build result is: ${{ job.status }}"
             if: always()
           env:
            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}     
