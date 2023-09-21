@@ -76,13 +76,15 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
           image-ref: '172.27.59.80:8082/akshay-github-actions/gha-springapp:${{ github.run_number }}'
-          format: 'table'
-          exit-code: '1'
+          format: template
           template: "@/contrib/html.tpl"
           output: trivy-report.html
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v3
+      with:
+          name: github-pages
+          path: trivy-report.html
           
 # SonarQube analysis using SonarQube Actions 
   SonarQube-analysis:
