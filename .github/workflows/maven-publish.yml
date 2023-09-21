@@ -1,5 +1,4 @@
-name: PR Decoration, Dockerize Java App and Deploy on EC2 with ASG
-
+name: CI & CD for SpringApp
 # events on which pipeline will run
 on: 
   #push:
@@ -16,7 +15,13 @@ env:
      MYSQL_USER: ${{ secrets.MYSQL_USER }}
      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-     RUN_NUMBER: ${{ github.run_number }}        
+     RUN_NUMBER: ${{ github.run_number }} 
+     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL}}
+     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL}}
+     SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+     JFROG_USERNAME: ${{secrets.JFROG_USERNAME}}
+     JFROG_PASSWORD: ${{secrets.JFROG_PASSWORD}}
+     
 jobs:
 
 # Building SpringBoot application, caching dependencies to improve workflow execution time.
@@ -67,52 +72,10 @@ jobs:
               docker login -u ${{ secrets.JFROG_USERNAME }} -p ${{ secrets.JFROG_PASSWORD }} http://172.27.59.80:8082
               docker push  172.27.59.80:8082/akshay-github-actions/gha-springapp:${{ github.run_number }}  
        
-  # Building Angular application, caching dependencies  to improve workflow execution time.
-  build-angular:
-    runs-on: 'self-hosted'
-    steps:
-      - name: set up Node.js
-        uses: actions/setup-node@v3
-        with:
-            node-version: 16 #you can adjust node version 14,16,18
-        
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli 
-
-      - name: Build Angular app
-        run: |
-          pwd
-          cd ./angular-app/app 
-          npm install 
-          ng build --prod
-      - name: cache for Angularapp
-        uses: actions/cache@v3
-        id: angular-cache
-        with:
-         path: ~/.npm
-         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-         restore-keys: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-         lookup-only: true
-         
-      - name: Debug Cache
-        run: |
-         echo "Cache Key: ${{ runner.os }}-${{ env.cache_key }}"
-         echo "Cache Directory Contents:"
-         ls -al ~/.m2
-        env:
-          cache_key: Linux-
-          
-      - name: docker stage + angular-app
-        run: |
-             cd ./angular-app/app 
-             docker build -t  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}  .
-             docker login -u ${{ secrets.JFROG_USERNAME }} -p ${{ secrets.JFROG_PASSWORD }} http://172.27.59.80:8082
-             docker push  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}   
-
 # SonarQube analysis using SonarQube Actions 
   SonarQube-analysis:
       runs-on: 'self-hosted'
-      needs: [ 'build-java','build-angular' ]
+      needs: [ 'build-java']
       steps:
         - name: SonarQube Scan
           uses: sonarsource/sonarqube-scan-action@master
@@ -123,7 +86,7 @@ jobs:
   #Github Integration with slack channel      
   Slack-notification:
       runs-on: 'self-hosted'
-      needs: ['build-java','build-angular','SonarQube-analysis']
+      needs: ['build-java','SonarQube-analysis']
       steps:
         - name: Slack Notification
           uses: act10ns/slack@v1
