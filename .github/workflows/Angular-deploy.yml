@@ -55,7 +55,21 @@ jobs:
              docker build -t  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}  .
              docker login -u ${{ secrets.JFROG_USERNAME }} -p ${{ secrets.JFROG_PASSWORD }} http://172.27.59.80:8082
              docker push  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}   
-
+     
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}'
+          format: template
+          template: "@/contrib/html.tpl"
+          output: trivy-report.html
+          
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: github-pages
+          path: trivy-report.html
+          
 # SonarQube analysis using SonarQube Actions 
 #  SonarQube-analysis:
 #      runs-on: 'self-hosted'
