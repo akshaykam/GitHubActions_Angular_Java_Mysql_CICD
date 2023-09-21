@@ -57,20 +57,21 @@ jobs:
              docker push  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}   
 
 # SonarQube analysis using SonarQube Actions 
-  SonarQube-analysis:
-      runs-on: 'self-hosted'
+#  SonarQube-analysis:
+#      runs-on: 'self-hosted'
     #  needs: [ 'build-java','build-angular' ]
-      steps:
-        - name: SonarQube Scan
-          uses: sonarsource/sonarqube-scan-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#      steps:
+#        - name: SonarQube Scan
+#          uses: sonarsource/sonarqube-scan-action@master
+#      env:
+#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
 
   #Github Integration with slack channel      
   Slack-notification:
       runs-on: 'self-hosted'
-      #needs: ['build-java','SonarQube-analysis']
+      #needs: ['build-angular']
       steps:
         - name: Slack Notification
           uses: act10ns/slack@v1
