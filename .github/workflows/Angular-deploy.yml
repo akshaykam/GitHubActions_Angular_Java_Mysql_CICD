@@ -71,7 +71,7 @@ jobs:
   #Github Integration with slack channel      
   Slack-notification:
       runs-on: 'self-hosted'
-      #needs: ['build-angular']
+      needs: ['build-angular']
       steps:
         - name: Slack Notification
           uses: act10ns/slack@v1
