@@ -10,7 +10,12 @@ jobs:
   build-angular:
     runs-on: 'self-hosted'
     env:
-      RUN_NUMBER: ${{ github.run_number }} 
+      RUN_NUMBER: ${{ github.run_number }}
+      JFROG_USERNAME: ${{secrets.JFROG_USERNAME}}
+      JFROG_PASSWORD: ${{secrets.JFROG_PASSWORD}}
+      SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+      SONAR_HOST_URL: ${{secrets.SONAR_HOST_URL}}
+      SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
 
     steps:
       - name: set up Node.js
