@@ -1,0 +1,78 @@
+name: CI & CD for Angularapp
+# on:
+#   push:
+#     branches: [ "master" ]
+on: 
+  workflow_dispatch
+ 
+jobs:
+# Building Angular application, caching dependencies  to improve workflow execution time.
+  build-angular:
+    runs-on: 'self-hosted'
+    env:
+      RUN_NUMBER: ${{ github.run_number }} 
+
+    steps:
+      - name: set up Node.js
+        uses: actions/setup-node@v3
+        with:
+            node-version: 16 #you can adjust node version 14,16,18
+        
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli 
+
+      - name: Build Angular app
+        run: |
+          pwd
+          cd ./angular-app/app 
+          npm install 
+          ng build --prod
+      - name: cache for Angularapp
+        uses: actions/cache@v3
+        id: angular-cache
+        with:
+         path: ~/.npm
+         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+         restore-keys: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+         lookup-only: true
+         
+      - name: Debug Cache
+        run: |
+         echo "Cache Key: ${{ runner.os }}-${{ env.cache_key }}"
+         echo "Cache Directory Contents:"
+         ls -al ~/.m2
+        env:
+          cache_key: Linux-
+          
+      - name: docker stage + angular-app
+        run: |
+             cd ./angular-app/app 
+             docker build -t  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}  .
+             docker login -u ${{ secrets.JFROG_USERNAME }} -p ${{ secrets.JFROG_PASSWORD }} http://172.27.59.80:8082
+             docker push  172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}   
+
+# SonarQube analysis using SonarQube Actions 
+  SonarQube-analysis:
+      runs-on: 'self-hosted'
+    #  needs: [ 'build-java','build-angular' ]
+      steps:
+        - name: SonarQube Scan
+          uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  #Github Integration with slack channel      
+  Slack-notification:
+      runs-on: 'self-hosted'
+      #needs: ['build-java','SonarQube-analysis']
+      steps:
+        - name: Slack Notification
+          uses: act10ns/slack@v1
+          with:
+            status: ${{job.status}}
+            steps:  ${{toJson(steps)}}
+            channel: '#github_actions_notification'
+            if: always()
+          env:
+           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}     
