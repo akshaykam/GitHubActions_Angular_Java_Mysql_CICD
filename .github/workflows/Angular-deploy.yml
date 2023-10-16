@@ -53,13 +53,13 @@ jobs:
         run: |
              cd ./angular-app/app 
               docker build -t akshaykamthe651/github_actions_angularapp:${{ github.run_number }}  .
-              docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin ${{ secrets.DOCKER_PASSWORD }} https://hub.docker.com/
+              docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin ${{ secrets.DOCKER_PASSWORD }}
               docker push  akshaykamthe651/github_actions_angularapp:${{ github.run_number }}   
      
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '172.27.59.80:8082/akshay-github-actions/gha-angularapp:${{ github.run_number }}'
+          image-ref:  'akshaykamthe651/github_actions_angularapp:${{ github.run_number }}'
           format: template
           template: "@/contrib/html.tpl"
           output: trivy-report.html
