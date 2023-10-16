@@ -53,7 +53,7 @@ jobs:
         run: |
              cd ./angular-app/app 
               docker build -t akshaykamthe651/github_actions_angularapp:${{ github.run_number }}  .
-              docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} https://hub.docker.com/
+              docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin ${{ secrets.DOCKER_PASSWORD }} https://hub.docker.com/
               docker push  akshaykamthe651/github_actions_angularapp:${{ github.run_number }}   
      
       - name: Run Trivy vulnerability scanner
