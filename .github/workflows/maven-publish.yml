@@ -77,7 +77,7 @@ jobs:
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-          image-ref: '172.27.59.80:8082/akshay-github-actions/gha-springapp:${{ github.run_number }}'
+          image-ref: 'akshaykamthe651/github_actions_angular_java_mysql:${{ github.run_number }}'
           format: template
           template: "@/contrib/html.tpl"
           output: trivy-report.html
