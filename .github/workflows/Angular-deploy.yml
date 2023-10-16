@@ -52,9 +52,9 @@ jobs:
       - name: docker stage + angular-app
         run: |
              cd ./angular-app/app 
-              docker build -t akshaykamthe651/github_actions_angular_java_mysql/gha_angularapp:${{ github.run_number }}  .
+              docker build -t akshaykamthe651/github_actions_angularapp:${{ github.run_number }}  .
               docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} https://hub.docker.com/
-              docker push  akshaykamthe651/github_actions_angular_java_mysql/gha_angularapp:${{ github.run_number }}   
+              docker push  akshaykamthe651/github_actions_angularapp:${{ github.run_number }}   
      
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
