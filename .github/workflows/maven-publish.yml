@@ -70,14 +70,14 @@ jobs:
     - name: docker stage + spring app
       run: |
               cd ./springboot-backend
-              docker build -t akshaykamthe651/github_actions_angular_java_mysql:${{ github.run_number }}  .
+              docker build -t akshaykamthe651/github_actions_angular_java_mysql:${RUN_NUMBER}  .
               docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-              docker push  akshaykamthe651/github_actions_angular_java_mysql:${{ github.run_number }}  
+              docker push  akshaykamthe651/github_actions_angular_java_mysql:${RUN_NUMBER}  
     
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-          image-ref: 'akshaykamthe651/github_actions_angular_java_mysql:${{ github.run_number }}'
+          image-ref: 'akshaykamthe651/github_actions_angular_java_mysql:${RUN_NUMBER}'
           format: template
           template: "@/contrib/html.tpl"
           output: trivy-report.html
