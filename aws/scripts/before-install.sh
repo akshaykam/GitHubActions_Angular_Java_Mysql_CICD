@@ -2,12 +2,12 @@
 set -xe
 
 # Delete the old  directory as needed.
-if [ -d /usr/local/codedeployresources ]; then
-    rm -rf /usr/local/codedeployresources/
+if [ -d /home/ec2-user/codeDeployment ]; then
+    rm -rf /home/ec2-user/codeDeployment
 fi
 
-mkdir -vp /usr/local/codedeployresources
-cd /usr/local/codedeployresources
+mkdir -vp /home/ec2-user/codeDeployment
+cd /home/ec2-user/codeDeployment
 
 docker pull akshaykamthe651/github_actions_angular_java_mysql:${RUN_NUMBER} 
 docker pull akshaykamthe651/github_actions_angularapp:${RUN_NUMBER}
