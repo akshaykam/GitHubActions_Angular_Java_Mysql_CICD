@@ -22,7 +22,7 @@ services:
      - 3tierNetwork
      
   springapp:
-    image: 172.27.59.80:8082/akshay-github-actions/gha-springapp:${RUN_NUMBER}
+    image: akshaykamthe651/github_actions_angular_java_mysql:${RUN_NUMBER}
     container_name: springapp
     ports:
       - 8085:8080
@@ -37,7 +37,7 @@ services:
      - 3tierNetwork
       
   angularapp:
-    image: 172.27.59.80:8082/akshay-github-actions/gha-angularapp/:${RUN_NUMBER}
+    image: akshaykamthe651/github_actions_angularapp:${RUN_NUMBER}
     container_name: angularapp
     ports: 
       - 4200:80
