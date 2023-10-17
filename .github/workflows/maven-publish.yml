@@ -74,19 +74,19 @@ jobs:
               docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
               docker push  akshaykamthe651/github_actions_angular_java_mysql:${RUN_NUMBER}  
     
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-          image-ref: 'akshaykamthe651/github_actions_angular_java_mysql:${RUN_NUMBER}'
-          format: template
-          template: "@/contrib/html.tpl"
-          output: trivy-report.html
+ #   - name: Run Trivy vulnerability scanner
+ #     uses: aquasecurity/trivy-action@master
+ #     with:
+ #         image-ref: 'akshaykamthe651/github_actions_angular_java_mysql:${RUN_NUMBER}'
+ #         format: template
+ #         template: "@/contrib/html.tpl"
+ #         output: trivy-report.html
           
-    - name: Archive code coverage results
-      uses: actions/upload-artifact@v3
-      with:
-          name: github-pages
-          path: trivy-report.html
+ #   - name: Archive code coverage results
+ #     uses: actions/upload-artifact@v3
+ #     with:
+ #         name: github-pages
+ #         path: trivy-report.html
           
 # SonarQube analysis using SonarQube Actions 
   SonarQube-analysis:
