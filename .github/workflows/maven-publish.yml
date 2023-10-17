@@ -118,6 +118,13 @@ jobs:
            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            aws-region: us-east-1
+       
+  # Create deployment to CodeDeploy
+        - name: AWS Create Deployment
+          run: |
+           aws deploy create-deployment \
+           --application-name aws-codedeploy
+           --deployment-group-name aws-codedeployment-group
 
   #Github Integration with slack channel      
   Slack-notification:
