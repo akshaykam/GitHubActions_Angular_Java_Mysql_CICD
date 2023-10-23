@@ -11,7 +11,8 @@ mkdir -vp /home/ec2-user/codeDeployment
 cd /home/ec2-user/codeDeployment
 
 #manually crete ssh key on Ec2 and add it Github account
-git clone https://akshaykam:${PRIVATE_REPO_PASS}@github.com/https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD.git
+#git clone https://akshaykam:${PRIVATE_REPO_PASS}@github.com/https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD.git
+git clone https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD.git
 cd GitHubActions_Angular_Java_Mysql_CICD/
 
 # Ensure the ownership permissions are correct.
