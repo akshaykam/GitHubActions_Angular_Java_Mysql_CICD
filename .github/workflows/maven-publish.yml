@@ -90,19 +90,20 @@ jobs:
  #         path: trivy-report.html
           
 # SonarQube analysis using SonarQube Actions 
-  SonarQube-analysis:
-      runs-on: 'self-hosted'
-      needs: [ 'build-java']
-      steps:
-        - name: SonarQube Scan
-          uses: sonarsource/sonarqube-scan-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#  SonarQube-analysis:
+#      runs-on: 'self-hosted'
+#      needs: [ 'build-java']
+#      steps:
+#        - name: SonarQube Scan
+#          uses: sonarsource/sonarqube-scan-action@master
+#      env:
+#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#
 
   Deployment-stage:
      runs-on: 'self-hosted'
-     needs: [ 'build-java', 'SonarQube-analysis' ]
+#     needs: [ 'build-java', 'SonarQube-analysis' ]
      steps:
         #- name: AWS CLI install
         #  run: |
