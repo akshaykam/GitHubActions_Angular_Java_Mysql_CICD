@@ -13,6 +13,8 @@ cd /home/ec2-user/codeDeployment
 #manually crete ssh key on Ec2 and add it Github account
 #git clone https://akshaykam:${PRIVATE_REPO_PASS}@github.com/https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD.git
 ssh -vT git@github.com
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+ssh-keygen -t rsa -C "akshaykam@cybage.com"
 git clone git@github.com:akshaykam/GitHubActions_Angular_Java_Mysql_CICD.git
 cd GitHubActions_Angular_Java_Mysql_CICD/
 
