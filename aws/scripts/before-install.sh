@@ -15,7 +15,8 @@ cd /home/ec2-user/codeDeployment
 ssh -vT git@github.com
 ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 ssh-keygen -t rsa -C "akshaykam@cybage.com"
-git clone git@github.com:akshaykam/GitHubActions_Angular_Java_Mysql_CICD.git
+# git clone git@github.com:akshaykam/GitHubActions_Angular_Java_Mysql_CICD.git
+git clone https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD.git
 cd GitHubActions_Angular_Java_Mysql_CICD/
 
 # Ensure the ownership permissions are correct.
