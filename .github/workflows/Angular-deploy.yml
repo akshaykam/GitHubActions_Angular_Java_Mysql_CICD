@@ -85,16 +85,16 @@ jobs:
 
 
   #Github Integration with slack channel      
-  Slack-notification:
-      runs-on: 'self-hosted'
-      needs: ['build-angular']
-      steps:
-        - name: Slack Notification
-          uses: act10ns/slack@v1
-          with:
-            steps:  ${{toJson(steps)}}
-            channel: '#github_actions_notification'
-            slack-message: "Angular App application build result is: ${{ job.status }}"
-            if: always()
-          env:
-           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}     
+#  Slack-notification:
+#      runs-on: 'self-hosted'
+#      needs: ['build-angular']
+#      steps:
+#        - name: Slack Notification
+#          uses: act10ns/slack@v1
+#          with:
+#            steps:  ${{toJson(steps)}}
+#            channel: '#github_actions_notification'
+#            slack-message: "Angular App application build result is: ${{ job.status }}"
+#            if: always()
+#          env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}     
