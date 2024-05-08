@@ -50,11 +50,11 @@ jobs:
         maven-version: '3.8.2'
     - name: call other workflow using WEB API call
       run: |
-            curl -X POST \
+            curl -L \
+            -H "Accept: application/vnd.github+json" \
             -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD/edit/master/.github/workflows/Angular-deploy.yml \
-            -d '{"ref":"master"}'
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD/edit/master/.github/workflows/Angular-deploy.yml
       
     - name: build with maven
       run: cd ./springboot-backend ; mvn clean install -DskipTests=true
