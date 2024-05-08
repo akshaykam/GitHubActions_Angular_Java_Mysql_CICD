@@ -24,7 +24,7 @@ env:
      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
      AWS_SECRET_ACCESS_KEY : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
      PRIVATE_REPO_PASS : ${{ secrets.PRIVATE_REPO_PASS }}
-     Number : 11
+     PAT_TOKEN : ${{ secrets.PAT_TOKEN }}
      
 jobs:
 
@@ -51,7 +51,7 @@ jobs:
     - name: call other workflow using WEB API call
       run: |
             curl -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD/edit/master/.github/workflows/Angular-deploy.yml \
             -d '{"ref":"master"}'
