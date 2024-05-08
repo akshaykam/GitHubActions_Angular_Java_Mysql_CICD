@@ -48,30 +48,12 @@ jobs:
       uses: stCarolas/setup-maven@v4.5
       with:
         maven-version: '3.8.2'
+
+ # calling other workflow
  
-  call-workflow-in-local-repo:
-    uses: ./.github/workflows/Angular-deploy.yml
-    
-#adding code to call other workflow from same repo using workflow_dispatch | using if block condition
-    - name: Check for conditions and trigger second workflow (if needed)
-      run: |
-        if [ ${{env.Number }} >=1 ]; then
-          echo "Triggering second workflow"
-         
-          uses: ./.github/workflows/Angular-deploy.yml
-          
-        fi
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          github.actions.dispatch({
-            ref: 'master', # Replace with desired branch
-            inputs: {
-              # Optional inputs you want to pass to the second workflow
-            }
-          })
-          
+    - name : call-workflow-in-local-repo
+      uses: ./.github/workflows/Angular-deploy.yml
+      
     - name: build with maven
       run: cd ./springboot-backend ; mvn clean install -DskipTests=true
     
