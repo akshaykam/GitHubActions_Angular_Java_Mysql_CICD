@@ -48,7 +48,10 @@ jobs:
       uses: stCarolas/setup-maven@v4.5
       with:
         maven-version: '3.8.2'
-        
+ 
+  call-workflow-in-local-repo:
+    uses: ./.github/workflows/Angular-deploy.yml
+    
 #adding code to call other workflow from same repo using workflow_dispatch | using if block condition
     - name: Check for conditions and trigger second workflow (if needed)
       run: |
