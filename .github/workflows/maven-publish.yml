@@ -48,11 +48,13 @@ jobs:
       uses: stCarolas/setup-maven@v4.5
       with:
         maven-version: '3.8.2'
-
- # calling other workflow
- 
-    - name : call-workflow-in-local-repo
-      uses: ./.github/workflows/Angular-deploy.yml
+    - name: call other workflow using WEB API call
+      run: |
+            curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD/edit/master/.github/workflows/Angular-deploy.yml/dispatches \
+            -d '{"ref":"master"}'
       
     - name: build with maven
       run: cd ./springboot-backend ; mvn clean install -DskipTests=true
