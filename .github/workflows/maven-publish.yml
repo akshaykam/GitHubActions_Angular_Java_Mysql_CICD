@@ -54,8 +54,9 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD/edit/master/.github/workflows/Angular-deploy.yml
-      
+            https://github.com/akshaykam/GitHubActions_Angular_Java_Mysql_CICD/edit/master/.github/workflows/Angular-deploy.yml/dispatches \
+             -d '{"ref":"master"}'
+             
     - name: build with maven
       run: cd ./springboot-backend ; mvn clean install -DskipTests=true
     
