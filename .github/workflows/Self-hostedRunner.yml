@@ -11,3 +11,9 @@ jobs:
         uses: actions/checkout@v3
       - name: printing stage  
         run: echo "this job is running on self-hosted runner"
+      - name: Group loggin
+        run: |
+          echo "::group::My Group messages"  
+          echo "msg1"
+          echo "msg2"
+          echo "::endgroup::"
